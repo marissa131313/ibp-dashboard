@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBP Program Calendar – Ralph Lauren</title>
+<style>
+/* ============================================================
+   CSS VARIABLES & RESET
+============================================================ */
+:root {
+  --navy:        #0B1F3A;
+  --navy-mid:    #152d52;
+  --cream:       #F8F6F2;
+  --cream-dark:  #EDEAE3;
+  --white:       #FFFFFF;
+  --gold:        #C5A46D;
+  --gold-light:  #d4b98a;
+  --gold-dark:   #a8894e;
+  --slate:       #6B7280;
+  --slate-light: #D9DDE3;
+  --slate-mid:   #9aa3af;
+  --green:       #2D6A4F;
+  --green-light: #e8f4ef;
+  --red:         #8B2635;
+  --red-light:   #faeaec;
+  --amber:       #92520e;
+  --amber-light: #fef3e6;
+
+  /* Region colors — the primary visual language of this dashboard */
+  --region-na:          #0B1F3A;
+  --region-emea:        #7B5B2E;
+  --region-apac:        #2D5373;
+  --region-global:      #2D6A4F;
+  --region-na-light:    #e8edf5;
+  --region-emea-light:  #f5edd9;
+  --region-apac-light:  #ddeaf4;
+  --region-global-light:#e8f4ef;
+
+  --shadow-sm: 0 1px 3px rgba(11,31,58,0.08), 0 1px 2px rgba(11,31,58,0.05);
+  --shadow-md: 0 4px 14px rgba(11,31,58,0.10), 0 2px 4px rgba(11,31,58,0.06);
+  --shadow-lg: 0 8px 32px rgba(11,31,58,0.14), 0 4px 8px rgba(11,31,58,0.08);
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --font-serif: 'Georgia', 'Times New Roman', 'Palatino Linotype', serif;
+  --font-sans:  'Trebuchet MS', 'Gill Sans', 'Optima', 'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--cream); color: var(--navy); line-height: 1.55; min-height: 100vh; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--slate-light); }
+::-webkit-scrollbar-thumb { background: var(--slate-mid); border-radius: 3px; }
+
+/* ============================================================
+   HEADER
+============================================================ */
+.site-header {
+  background: var(--navy);
+  color: var(--white);
+  padding: 0 40px;
+  border-bottom: 3px solid var(--gold);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0 18px;
+}
+.header-brand { display: flex; align-items: center; gap: 22px; }
+.rl-wordmark { display: flex; flex-direction: column; gap: 3px; }
+.rl-name {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: normal;
+  letter-spacing: 0.24em;
+  color: var(--white);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.rl-rule { height: 1px; background: var(--gold); }
+.rl-sub {
+  font-size: 8px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-family: var(--font-sans);
+}
+.header-sep { width: 1px; height: 42px; background: rgba(197,164,109,0.28); }
+.header-titles {}
+.header-dashboard-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1.2;
+}
+.header-dashboard-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.42);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.header-meta { display: flex; gap: 30px; align-items: flex-end; }
+.meta-item { text-align: right; }
+.meta-label { font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.32); }
+.meta-value { font-size: 12px; color: rgba(255,255,255,0.78); margin-top: 2px; }
+.meta-value.gold { color: var(--gold-light); }
+
+/* ============================================================
+   DASHBOARD BODY
+============================================================ */
+.dashboard-body { max-width: 1640px; margin: 0 auto; padding: 26px 40px 52px; }
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  border-left: 3px solid var(--gold);
+  padding-left: 10px;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   REGION LEGEND BAR
+============================================================ */
+.region-legend-bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  background: var(--white);
+  border: 1px solid var(--slate-light);
+  border-radius: var(--radius-md);
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.region-legend-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--slate-mid);
+}
+.region-legend-items { display: flex; gap: 8px; flex-wrap: wrap; }
+.region-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  user-select: none;
+}
+.region-legend-item:hover { border-color: var(--slate-light); background: var(--cream); }
+.region-legend-item.active { border-color: var(--gold); background: var(--cream-dark); }
+.region-swatch { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; }
+.region-legend-item span { font-size: 11.5px; color: var(--navy); font-weight: 500; letter-spacing: 0.03em; }
+
+/* ============================================================
+   KPI CARDS
+============================================================ */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+@media (max-width: 1100px) { .kpi-row { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 650px)  { .kpi-row { grid-template-columns: repeat(2,1fr); } }
+.kpi-card {
+  background: var(--white);
+  border: 1px solid var(--slate-light);
+  border-radius: var(--radius-md);
+  padding: 17px 17px 13px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+}
+.kpi-card.kpi-na::before    { background: var(--region-na); }
+.kpi-card.kpi-emea::before  { background: var(--region-emea); }
+.kpi-card.kpi-apac::before  { background: var(--region-apac); }
+.kpi-card:hover { box-shadow: var(--shadow-md); }
+.kpi-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 8px; }
+.kpi-number { font-family: var(--font-serif); font-size: 34px; color: var(--navy); line-height: 1; }
+.kpi-sub { font-size: 10.5px; color: var(--slate-mid); margin-top: 6px; }
+
+/* ============================================================
+   FILTER PANEL
+============================================================ */
+.filter-panel {
+  background: var(--white);
+  border: 1px solid var(--slate-light);
+  border-radius: var(--radius-md);
+  padding: 15px 20px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 22px;
+}
+.filter-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+.filter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr auto auto;
+  gap: 12px;
+  align-items: end;
+}
+@media (max-width: 1000px) { .filter-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 650px)  { .filter-grid { grid-template-columns: 1fr 1fr; } }
+.filter-group label { display: block; font-size: 9px; text-transform: uppercase; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 5px; }
+.filter-select {
+  width: 100%;
+  border: 1px solid var(--slate-light);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: var(--navy);
+  background: var(--cream);
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: border-color 0.18s;
+  cursor: pointer;
+}
+.filter-select:focus { border-color: var(--gold); background: var(--white); }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 15px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: all 0.17s;
+  white-space: nowrap;
+}
+.btn-navy   { background: var(--navy); color: var(--white); }
+.btn-navy:hover { background: var(--navy-mid); }
+.btn-outline { background: transparent; color: var(--navy); border: 1px solid var(--slate-light); }
+.btn-outline:hover { border-color: var(--navy); background: var(--cream); }
+.btn-gold   { background: var(--gold); color: var(--navy); font-weight: bold; }
+.btn-gold:hover { background: var(--gold-dark); color: var(--white); }
+
+/* ============================================================
+   MAIN LAYOUT
+============================================================ */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+@media (max-width: 1050px) { .main-layout { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   CALENDAR
+============================================================ */
+.calendar-card {
+  background: var(--white);
+  border: 1px solid var(--slate-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--navy);
+  padding: 12px 18px;
+}
+.cal-nav-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.22);
+  color: var(--white);
+  width: 28px; height: 28px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.14s;
+}
+.cal-nav-btn:hover { background: rgba(255,255,255,0.11); border-color: var(--gold); }
+.cal-month-label { font-family: var(--font-serif); font-size: 16px; color: var(--white); letter-spacing: 0.06em; }
+.calendar-grid-header { display: grid; grid-template-columns: repeat(7,1fr); background: var(--navy-mid); }
+.cal-day-name { text-align: center; padding: 7px 0; font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+.calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); padding: 3px; }
+.cal-cell {
+  min-height: 88px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 5px 5px 3px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.cal-cell:hover { background: var(--cream); border-color: var(--slate-light); }
+.cal-cell.other-month { opacity: 0.3; pointer-events: none; }
+.cal-cell.today { background: #eef2fa; border-color: var(--navy); }
+.cal-cell.today .cal-date-num { color: var(--navy); font-weight: bold; }
+.cal-date-num { font-size: 11.5px; color: var(--slate-mid); margin-bottom: 3px; font-family: var(--font-serif); }
+.cal-event-pill {
+  display: block;
+  font-size: 9.5px;
+  padding: 2px 5px;
+  border-radius: 2px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  color: var(--white);
+  transition: opacity 0.12s;
+  line-height: 1.4;
+}
+.cal-event-pill:hover { opacity: 0.76; }
+.cal-more-badge { font-size: 9.5px; color: var(--slate-mid); cursor: pointer; padding: 1px 3px; }
+.cal-more-badge:hover { color: var(--navy); }
+
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--slate-light);
+  background: var(--cream);
+  align-items: center;
+}
+.legend-bar-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--slate-mid); margin-right: 2px; }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; }
+.legend-item span { font-size: 10.5px; color: var(--slate); }
+
+/* ============================================================
+   UPCOMING PANEL
+============================================================ */
+.upcoming-panel {
+  background: var(--white);
+  border: 1px solid var(--slate-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.panel-header {
+  background: var(--navy);
+  color: var(--white);
+  padding: 12px 17px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.panel-header-title { font-family: var(--font-serif); font-size: 14px; letter-spacing: 0.05em; }
+.panel-count { background: var(--gold); color: var(--navy); font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 10px; }
+.event-list { overflow-y: auto; flex: 1; max-height: 530px; }
+.event-list-item {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--slate-light);
+  cursor: pointer;
+  transition: background 0.12s;
+  align-items: start;
+}
+.event-list-item:hover { background: var(--cream); }
+.event-list-item:last-child { border-bottom: none; }
+.event-date-badge { border-radius: var(--radius-sm); text-align: center; padding: 6px 3px; flex-shrink: 0; }
+.event-date-day { font-family: var(--font-serif); font-size: 18px; line-height: 1; color: var(--white); }
+.event-date-mon { font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.62); margin-top: 1px; }
+.event-info-title { font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 2px; line-height: 1.3; }
+.event-info-cap { font-size: 10.5px; color: var(--slate); margin-bottom: 4px; }
+.event-info-meta { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag { font-size: 9px; padding: 2px 6px; border-radius: 2px; font-weight: 500; white-space: nowrap; letter-spacing: 0.04em; }
+.tag-status-planned    { background: var(--slate-light); color: var(--slate); }
+.tag-status-confirmed  { background: var(--green-light); color: var(--green); }
+.tag-status-inprogress { background: var(--amber-light); color: var(--amber); }
+.tag-status-atrisk     { background: var(--red-light);   color: var(--red); }
+.tag-status-complete   { background: #e4f4e9; color: #1b5e3a; }
+.tag-na     { background: var(--region-na-light);    color: var(--region-na); }
+.tag-emea   { background: var(--region-emea-light);  color: var(--region-emea); }
+.tag-apac   { background: var(--region-apac-light);  color: var(--region-apac); }
+.tag-global { background: var(--region-global-light);color: var(--region-global); }
+.tag-type   { background: var(--cream-dark); color: var(--slate); border: 1px solid var(--slate-light); }
+
+/* ============================================================
+   CAPABILITY GRID
+============================================================ */
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+@media (max-width: 1200px) { .cap-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 700px)  { .cap-grid { grid-template-columns: 1fr 1fr; } }
+.cap-card {
+  background: var(--white);
+  border: 1px solid var(--slate-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+.cap-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.cap-header { padding: 12px 15px 10px; background: var(--navy); border-bottom: 2px solid var(--gold); }
+.cap-name { font-family: var(--font-serif); font-size: 12.5px; color: var(--white); letter-spacing: 0.03em; line-height: 1.3; }
+.cap-body { padding: 12px 15px; }
+.cap-stat-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.cap-stat { text-align: center; }
+.cap-stat-num { font-family: var(--font-serif); font-size: 21px; color: var(--navy); }
+.cap-stat-lbl { font-size: 8.5px; color: var(--slate); text-transform: uppercase; letter-spacing: 0.09em; }
+.cap-next {
+  font-size: 10.5px; color: var(--slate); padding-top: 8px;
+  border-top: 1px solid var(--slate-light); line-height: 1.5;
+}
+.cap-next strong { color: var(--navy); }
+
+/* ============================================================
+   MODAL
+============================================================ */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(11,31,58,0.52);
+  z-index: 1000;
+  align-items: flex-start; justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  backdrop-filter: blur(3px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%; max-width: 660px;
+  overflow: hidden;
+  animation: modalIn 0.2s ease;
+  margin: auto;
+}
+@keyframes modalIn { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:translateY(0); } }
+.modal-header { background: var(--navy); color: var(--white); padding: 18px 22px 16px; border-bottom: 3px solid var(--gold); position: relative; }
+.modal-region-badge {
+  display: inline-block; font-size: 9.5px; text-transform: uppercase;
+  letter-spacing: 0.13em; padding: 3px 10px; border-radius: 2px;
+  margin-bottom: 8px; font-weight: bold;
+}
+.modal-title { font-family: var(--font-serif); font-size: 19px; line-height: 1.25; margin-bottom: 5px; }
+.modal-date-line { font-size: 11px; color: rgba(255,255,255,0.52); }
+.modal-close {
+  position: absolute; right: 16px; top: 14px;
+  background: rgba(255,255,255,0.13); border: none; color: var(--white);
+  width: 26px; height: 26px; border-radius: 50%;
+  cursor: pointer; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.14s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.26); }
+.modal-body { padding: 20px 22px; max-height: 62vh; overflow-y: auto; }
+.modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+@media (max-width: 580px) { .modal-grid { grid-template-columns: 1fr; } }
+.mf-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 3px; }
+.mf-value { font-size: 13px; color: var(--navy); line-height: 1.4; }
+.modal-rule { height: 1px; background: var(--slate-light); margin: 14px 0; }
+.modal-desc {
+  font-size: 13px; color: var(--slate); line-height: 1.62;
+  padding: 13px; background: var(--cream);
+  border-radius: var(--radius-sm); border-left: 3px solid var(--gold);
+}
+.modal-desc.navy-rule { border-left-color: var(--navy); }
+.modal-footer { padding: 12px 22px; border-top: 1px solid var(--slate-light); background: var(--cream); display: flex; justify-content: flex-end; gap: 10px; }
+
+/* FOOTER */
+.site-footer {
+  background: var(--navy); color: rgba(255,255,255,0.3);
+  text-align: center; padding: 13px 40px; font-size: 10px;
+  letter-spacing: 0.12em; border-top: 2px solid var(--gold); margin-top: 14px;
+}
+.site-footer span { color: rgba(255,255,255,0.48); }
+</style>
+</head>
+<body>
+
+<!-- ===============================================================
+     HEADER
+=============================================================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="rl-wordmark">
+        <div class="rl-name">Ralph Lauren</div>
+        <div class="rl-rule"></div>
+        <div class="rl-sub">Integrated Business Planning (IBP) Transformation</div>
+      </div>
+      <div class="header-sep"></div>
+      <div class="header-titles">
+        <div class="header-dashboard-title">Program Calendar Dashboard</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <div class="meta-label">Last Updated</div>
+        <div class="meta-value" id="lastUpdated">—</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Active Filter</div>
+        <div class="meta-value gold" id="activeFilterLabel">All Regions</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===============================================================
+     BODY
+=============================================================== -->
+<div class="dashboard-body">
+
+  <!-- FILTER PANEL -->
+  <div class="filter-panel">
+    <div class="filter-header">
+      <div class="section-title" style="margin-bottom:0">Filter Events</div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-gold" onclick="goToToday()">⌂ Today</button>
+        <button class="btn btn-outline" onclick="resetFilters()">↺ Reset</button>
+      </div>
+    </div>
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>Region</label>
+        <select class="filter-select" id="filterRegion" onchange="applyFilters()">
+          <option value="">All Regions</option>
+          <option>NA</option>
+          <option>EMEA</option>
+          <option>APAC</option>
+          <option>Global</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Capability</label>
+        <select class="filter-select" id="filterCap" onchange="applyFilters()">
+          <option value="">All Capabilities</option>
+          <option>Evergreen Demand Planning</option>
+          <option>Location Financial Planning</option>
+          <option>Merchandise Financial Planning</option>
+          <option>Assortment Planning</option>
+          <option>Space Planning</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Event Type</label>
+        <select class="filter-select" id="filterType" onchange="applyFilters()">
+          <option value="">All Types</option>
+          <option>Training</option>
+          <option>Workshop</option>
+          <option>Roadshow</option>
+          <option>Town Hall</option>
+          <option>Demo</option>
+          <option>Survey</option>
+          <option>Co-location</option>
+          <option>Review Session</option>
+          <option>Newsletter</option>
+          <option>User Testing</option>
+          <option>Go-Live Support</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Status</label>
+        <select class="filter-select" id="filterStatus" onchange="applyFilters()">
+          <option value="">All Statuses</option>
+          <option>Planned</option>
+          <option>Confirmed</option>
+          <option>In Progress</option>
+          <option>Complete</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALENDAR + UPCOMING PANEL -->
+  <div class="main-layout">
+    <div class="calendar-card">
+      <div class="calendar-nav">
+        <button class="cal-nav-btn" onclick="prevMonth()">&#8249;</button>
+        <div class="cal-month-label" id="calMonthLabel">—</div>
+        <button class="cal-nav-btn" onclick="nextMonth()">&#8250;</button>
+      </div>
+      <div class="calendar-grid-header">
+        <div class="cal-day-name">Sun</div><div class="cal-day-name">Mon</div>
+        <div class="cal-day-name">Tue</div><div class="cal-day-name">Wed</div>
+        <div class="cal-day-name">Thu</div><div class="cal-day-name">Fri</div>
+        <div class="cal-day-name">Sat</div>
+      </div>
+      <div class="calendar-grid" id="calGrid"></div>
+      <div class="legend-bar">
+        <span class="legend-bar-label">Region color key:</span>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--region-na)"></div><span>NA</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--region-emea)"></div><span>EMEA</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--region-apac)"></div><span>APAC</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--region-global)"></div><span>Global</span></div>
+      </div>
+    </div>
+
+    <div class="upcoming-panel">
+      <div class="panel-header">
+        <div class="panel-header-title">Upcoming Events</div>
+        <div class="panel-count" id="upcomingCount">—</div>
+      </div>
+      <div class="event-list" id="upcomingList"></div>
+    </div>
+  </div>
+
+  <!-- CAPABILITY SNAPSHOT -->
+  <div class="section-title">Capability Snapshot</div>
+  <div class="cap-grid" id="capGrid"></div>
+
+</div>
+
+<footer class="site-footer">
+  <span>Ralph Lauren &nbsp;·&nbsp; IBP Program Calendar Dashboard</span> &nbsp;·&nbsp; Internal Use Only &nbsp;·&nbsp; Program Management View
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-region-badge" id="mRegionBadge">—</div>
+      <div class="modal-title" id="mTitle">—</div>
+      <div class="modal-date-line" id="mDateLine">—</div>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div><div class="mf-label">Capability</div><div class="mf-value" id="mCap">—</div></div>
+        <div><div class="mf-label">Event Type</div><div class="mf-value" id="mType">—</div></div>
+        <div><div class="mf-label">Region</div><div class="mf-value" id="mRegion">—</div></div>
+        <div><div class="mf-label">Location</div><div class="mf-value" id="mLocation">—</div></div>
+        <div><div class="mf-label">Session Lead</div><div class="mf-value" id="mOwner">—</div></div>
+        <div><div class="mf-label">Status</div><div class="mf-value" id="mStatus">—</div></div>
+        <div style="grid-column:span 2"><div class="mf-label">Audience</div><div class="mf-value" id="mAudience">—</div></div>
+      </div>
+      <div class="modal-rule"></div>
+      <div class="mf-label" style="margin-bottom:8px">About This Session</div>
+      <div class="modal-desc" id="mDesc">—</div>
+      <div class="modal-rule"></div>
+      <div class="mf-label" style="margin-bottom:8px">How to Prepare</div>
+      <div class="modal-desc navy-rule" id="mPrep">—</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModalDirect()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONSTANTS
+============================================================ */
+const REGION_COLOR = {
+  NA:     '#0B1F3A',
+  EMEA:   '#7B5B2E',
+  APAC:   '#2D5373',
+  Global: '#2D6A4F',
+};
+const REGION_TAG = {
+  NA:     'tag-na',
+  EMEA:   'tag-emea',
+  APAC:   'tag-apac',
+  Global: 'tag-global',
+};
+const CAPABILITIES = [
+  'Evergreen Demand Planning',
+  'Location Financial Planning',
+  'Merchandise Financial Planning',
+  'Assortment Planning',
+  'Space Planning',
+];
+
+/* ============================================================
+   DATE HELPER — events are offset from today so the dashboard
+   always shows current, upcoming dates no matter when opened.
+   d(n) returns a YYYY-MM-DD string n days from today.
+   fmtDate is defined later but hoisted safely via function decl;
+   we redefine inline here for use before EVENTS is built.
+============================================================ */
+function d(offset) {
+  const dt = new Date();
+  dt.setHours(0,0,0,0);
+  dt.setDate(dt.getDate() + offset);
+  const y = dt.getFullYear();
+  const m = String(dt.getMonth()+1).padStart(2,'0');
+  const day = String(dt.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+/* ============================================================
+   EVENT DATA  (dates = days from today via d(n))
+============================================================ */
+const EVENTS = [
+  {id:1,  title:"IBP Program Overview – Town Hall",
+   date:d(8), startTime:"10:00", endTime:"11:30",
+   owner:"Sarah Mitchell", region:"Global", capability:"Evergreen Demand Planning",
+   type:"Town Hall", status:"Confirmed",
+   location:"Virtual (Microsoft Teams)",
+   audience:"All IBP participants and interested associates",
+   notes:"Quarterly program update covering what IBP means for you, the timeline ahead, and how to get involved. Q&A open to all.",
+   prep:"No preparation required. Join via the Teams link distributed by email."},
+
+  {id:2,  title:"Demand Planning System Demo – NA",
+   date:d(10), startTime:"14:00", endTime:"15:00",
+   owner:"James Okafor", region:"NA", capability:"Evergreen Demand Planning",
+   type:"Demo", status:"Confirmed",
+   location:"Virtual (Microsoft Teams)",
+   audience:"NA Demand Planners and Merchandise Planners",
+   notes:"Live system walkthrough of the new IBP demand forecasting tool. No login required — viewing only.",
+   prep:"Review the one-page Demand Planning overview sent to your inbox."},
+
+  {id:3,  title:"Assortment Planning Workshop – NA",
+   date:d(15), startTime:"09:00", endTime:"17:00",
+   owner:"Priya Nair", region:"NA", capability:"Assortment Planning",
+   type:"Workshop", status:"Confirmed",
+   location:"New York – 7th Avenue Office, Room 14B",
+   audience:"NA Merchants, Planners, and Visual Team",
+   notes:"Full-day hands-on session exploring the future-state assortment planning process. Covers seasonal flow, door-level planning, and review cadences.",
+   prep:"Bring your current season plan. Laptop required. Session runs 9am–5pm with breaks."},
+
+  {id:4,  title:"Readiness Survey – Wave 1 Opens",
+   date:d(17), startTime:"08:00", endTime:"08:00",
+   owner:"Marcus Chen", region:"Global", capability:"Evergreen Demand Planning",
+   type:"Survey", status:"Confirmed",
+   location:"Online (link sent via email)",
+   audience:"All IBP participants",
+   notes:"Short 10-minute survey to help the program team understand how ready you feel. Your responses are completely anonymous.",
+   prep:"Check your inbox for the survey link. Takes approximately 10 minutes to complete."},
+
+  {id:5,  title:"MFP System Demo – EMEA",
+   date:d(17), startTime:"14:00", endTime:"15:30",
+   owner:"Marc Lefebvre", region:"EMEA", capability:"Merchandise Financial Planning",
+   type:"Demo", status:"Confirmed",
+   location:"Virtual (Microsoft Teams)",
+   audience:"EMEA Finance Planners and Regional MFP Users",
+   notes:"Walkthrough of the Merchandise Financial Planning module. See how season targets, OTB, and markdown planning connect in the new system.",
+   prep:"Review the MFP glossary sheet sent by your regional champion."},
+
+  {id:6,  title:"Location Financial Planning – User Testing",
+   date:d(22), startTime:"13:00", endTime:"16:00",
+   owner:"Priya Nair", region:"NA", capability:"Location Financial Planning",
+   type:"User Testing", status:"Confirmed",
+   location:"Virtual (Zoom – link distributed separately)",
+   audience:"NA Store Planners (select group of 12)",
+   notes:"Hands-on user testing session for the Location Financial Planning module. Your feedback directly shapes the final design.",
+   prep:"Sandbox login credentials arrive 48 hours before the session. Please have your camera on."},
+
+  {id:7,  title:"Readiness Survey – Wave 1 Closes",
+   date:d(24), startTime:"23:59", endTime:"23:59",
+   owner:"Marcus Chen", region:"Global", capability:"Evergreen Demand Planning",
+   type:"Survey", status:"Planned",
+   location:"Online",
+   audience:"All IBP participants",
+   notes:"Wave 1 survey closes at midnight. If you haven't completed it yet, please do so before the deadline.",
+   prep:"Complete the survey using the link in your inbox before midnight."},
+
+  {id:8,  title:"Assortment Planning Demo – EMEA",
+   date:d(24), startTime:"10:00", endTime:"11:30",
+   owner:"Marc Lefebvre", region:"EMEA", capability:"Assortment Planning",
+   type:"Demo", status:"Planned",
+   location:"Virtual (Microsoft Teams)",
+   audience:"EMEA Merchants and Regional Planners",
+   notes:"Introduction to the new Assortment Planning tool for EMEA users. Covers regional configuration and seasonal calendar alignment.",
+   prep:"Review the EMEA assortment planning one-pager sent by your champion."},
+
+  {id:9,  title:"Space Planning Intro – APAC",
+   date:d(29), startTime:"10:00", endTime:"11:30",
+   owner:"Yuki Tanaka", region:"APAC", capability:"Space Planning",
+   type:"Demo", status:"Planned",
+   location:"Virtual (Microsoft Teams – APAC time zone)",
+   audience:"APAC Visual Merchandising and Store Operations",
+   notes:"First look at the new Space Planning capability. Covers store layout planning, fixture management, and planogram basics.",
+   prep:"No prior system knowledge required. Join using the Teams link in your calendar invite."},
+
+  {id:10, title:"IBP Newsletter – This Month's Edition",
+   date:d(25), startTime:"07:00", endTime:"07:00",
+   owner:"Lena Becker", region:"Global", capability:"Evergreen Demand Planning",
+   type:"Newsletter", status:"Planned",
+   location:"Email Distribution",
+   audience:"All program participants",
+   notes:"Monthly newsletter covering the upcoming training schedule, a capability spotlight, and a system tip of the month.",
+   prep:"No action required. Watch for it in your inbox."},
+
+  {id:11, title:"MFP Review Session – NA",
+   date:d(31), startTime:"10:00", endTime:"11:30",
+   owner:"Anita Solis", region:"NA", capability:"Merchandise Financial Planning",
+   type:"Review Session", status:"Planned",
+   location:"Virtual (Microsoft Teams)",
+   audience:"NA Finance Planning leads and super users",
+   notes:"Review of the MFP training materials and sandbox environment ahead of upcoming training cohorts. Opportunity to ask questions and flag gaps.",
+   prep:"Review the training agenda sent by Anita. Come prepared with questions."},
+
+  {id:12, title:"Demand Planning Demo – EMEA",
+   date:d(32), startTime:"13:00", endTime:"14:30",
+   owner:"Marc Lefebvre", region:"EMEA", capability:"Evergreen Demand Planning",
+   type:"Demo", status:"Planned",
+   location:"Virtual (Microsoft Teams)",
+   audience:"EMEA Demand Planners and Champions",
+   notes:"Live demo of the Demand Planning module for EMEA users. Focuses on the EMEA seasonal cadence and regional configuration.",
+   prep:"Review your current demand planning process. No system access required."},
+
+  {id:13, title:"Co-location Week – NA Program Team",
+   date:d(35), startTime:"09:00", endTime:"18:00",
+   owner:"Sarah Mitchell", region:"NA", capability:"Evergreen Demand Planning",
+   type:"Co-location", status:"Confirmed",
+   location:"New York – 7th Avenue Office",
+   audience:"Core IBP Program Team (NA)",
+   notes:"Full-team in-person week for final training preparation, stakeholder sessions, and cross-capability alignment.",
+   prep:"Travel confirmed. Badge access to Floor 12 required — contact facilities one week before."},
+
+  {id:14, title:"Training: Demand Planning – NA Cohort 1",
+   date:d(36), startTime:"08:30", endTime:"17:00",
+   owner:"Anita Solis", region:"NA", capability:"Evergreen Demand Planning",
+   type:"Training", status:"Confirmed",
+   location:"New York – Training Suite, Floor 4",
+   audience:"NA Demand Planners – Cohort 1 (40 participants)",
+   notes:"Full-day role-based training for NA Demand Planners. Covers system navigation, the new planning cadence, and how your day-to-day changes post go-live.",
+   prep:"Complete the online pre-work module (30 min) at least 2 days before. Bring your laptop and charger."},
+
+  {id:15, title:"Training: Merchandise Financial Planning – NA Cohort 1",
+   date:d(37), startTime:"08:30", endTime:"17:00",
+   owner:"Anita Solis", region:"NA", capability:"Merchandise Financial Planning",
+   type:"Training", status:"Confirmed",
+   location:"New York – Training Suite, Floor 4",
+   audience:"NA Finance Planners – Cohort 1 (35 participants)",
+   notes:"Role-based training covering season setup, OTB workflows, and the new plan approval process in the IBP system.",
+   prep:"Complete the pre-work e-learning. Review your current OTB templates for a hands-on exercise."},
+
+  {id:16, title:"Space Planning Demo – EMEA",
+   date:d(38), startTime:"14:00", endTime:"15:30",
+   owner:"Marc Lefebvre", region:"EMEA", capability:"Space Planning",
+   type:"Demo", status:"Confirmed",
+   location:"Virtual (Microsoft Teams)",
+   audience:"EMEA Visual Merchandising and Store Operations",
+   notes:"First look at Space Planning for EMEA audiences. Covers planogram workflows and how store layout planning connects to merchandise planning.",
+   prep:"No preparation required."},
+
+  {id:17, title:"Assortment Planning – APAC User Testing",
+   date:d(42), startTime:"10:00", endTime:"13:00",
+   owner:"Yuki Tanaka", region:"APAC", capability:"Assortment Planning",
+   type:"User Testing", status:"Confirmed",
+   location:"Virtual (Zoom – APAC time zone)",
+   audience:"APAC Merchants (8 participants)",
+   notes:"Pre-roadshow user testing for the Assortment Planning module. Participants complete guided tasks and give feedback to the product team.",
+   prep:"Sandbox credentials sent 48 hours before. Camera on required."},
+
+  {id:18, title:"APAC Roadshow – Singapore",
+   date:d(43), startTime:"09:00", endTime:"17:00",
+   owner:"Yuki Tanaka", region:"APAC", capability:"Assortment Planning",
+   type:"Roadshow", status:"Confirmed",
+   location:"Singapore – Asia Square, Level 22",
+   audience:"APAC Merchants, Planners, and Leaders",
+   notes:"First stop of the APAC roadshow. Live system demos, Q&A with the program team, and a regional champion session. Lunch provided.",
+   prep:"No preparation needed. Walk-in demos available 2–4pm."},
+
+  {id:19, title:"APAC Roadshow – Sydney",
+   date:d(45), startTime:"09:00", endTime:"17:00",
+   owner:"Yuki Tanaka", region:"APAC", capability:"Merchandise Financial Planning",
+   type:"Roadshow", status:"Confirmed",
+   location:"Sydney – George Street Office, Level 8",
+   audience:"APAC Finance, Merchandise, and Planning Teams",
+   notes:"Sydney roadshow focusing on MFP and Location Financial Planning. Interactive Q&A and breakout tables by role.",
+   prep:"Full-agenda attendees should RSVP via the event link. Drop-in demos 1–3pm."},
+
+  {id:20, title:"APAC Roadshow – Tokyo",
+   date:d(46), startTime:"09:00", endTime:"17:00",
+   owner:"Yuki Tanaka", region:"APAC", capability:"Space Planning",
+   type:"Roadshow", status:"Confirmed",
+   location:"Tokyo – Shibuya Office",
+   audience:"Japan Planning and Visual Merchandising Teams",
+   notes:"Tokyo roadshow with interpreter available. Focus on Space Planning and Assortment modules. Materials available in Japanese.",
+   prep:"Contact your champion for the Japanese-language session materials."},
+
+  {id:21, title:"Training: Assortment Planning – NA Cohort 1",
+   date:d(49), startTime:"09:00", endTime:"16:00",
+   owner:"Anita Solis", region:"NA", capability:"Assortment Planning",
+   type:"Training", status:"Confirmed",
+   location:"Chicago – Learning Center, Suite 300",
+   audience:"NA Merchants – Cohort 1 (40 participants)",
+   notes:"Full-day assortment planning training covering door-level building, seasonal flow, size scaling, and the new approval workflow.",
+   prep:"Complete the pre-work module (20 min). Bring your current season assortment file for a hands-on exercise."},
+
+  {id:22, title:"Training: Merchandise Financial Planning – EMEA Cohort 1",
+   date:d(50), startTime:"09:00", endTime:"16:00",
+   owner:"Marc Lefebvre", region:"EMEA", capability:"Merchandise Financial Planning",
+   type:"Training", status:"Confirmed",
+   location:"Amsterdam – Finance Hub, Conference Suite",
+   audience:"EMEA Finance Analysts – Cohort 1 (35 participants)",
+   notes:"EMEA MFP training, fully localised for EMEA planning calendar and currency settings. Includes a region-specific OTB exercise.",
+   prep:"Complete the pre-work e-learning (link from your champion). Bring your laptop — sandbox access provided."},
+
+  {id:23, title:"Training: Demand Planning – APAC Cohort 1",
+   date:d(51), startTime:"09:00", endTime:"16:00",
+   owner:"Yuki Tanaka", region:"APAC", capability:"Evergreen Demand Planning",
+   type:"Training", status:"Planned",
+   location:"Singapore – Asia Square, Training Room B",
+   audience:"APAC Demand Planners – Cohort 1 (28 participants)",
+   notes:"Demand Planning training tailored for the APAC regional planning cycle. Follows the roadshow engagement.",
+   prep:"Complete the pre-work module. Sandbox credentials emailed to you one week before."},
+
+  {id:24, title:"Location Financial Planning Workshop – EMEA",
+   date:d(52), startTime:"10:00", endTime:"14:00",
+   owner:"Marc Lefebvre", region:"EMEA", capability:"Location Financial Planning",
+   type:"Workshop", status:"Planned",
+   location:"Virtual (Microsoft Teams)",
+   audience:"EMEA Store Finance and Regional Planning Teams",
+   notes:"Hands-on workshop exploring how Location Financial Planning works for EMEA store portfolios. Capped at 20 participants.",
+   prep:"Review your store cluster list. Sandbox access granted the morning of the session."},
+
+  {id:25, title:"Readiness Survey – Wave 2 Opens",
+   date:d(56), startTime:"08:00", endTime:"08:00",
+   owner:"Marcus Chen", region:"Global", capability:"Evergreen Demand Planning",
+   type:"Survey", status:"Planned",
+   location:"Online (link sent via email)",
+   audience:"All IBP participants",
+   notes:"Second pulse survey tracking how your confidence has grown since Wave 1. Approximately 10 minutes to complete.",
+   prep:"Watch for the survey link in your inbox."},
+
+  {id:26, title:"Space Planning – NA User Testing",
+   date:d(57), startTime:"13:00", endTime:"16:00",
+   owner:"Priya Nair", region:"NA", capability:"Space Planning",
+   type:"User Testing", status:"Planned",
+   location:"Virtual (Zoom)",
+   audience:"NA Visual Merchandising Team (10 participants)",
+   notes:"Structured testing session for the Space Planning module. Complete 5 guided tasks in the sandbox and share real-time feedback.",
+   prep:"Sandbox credentials arrive 48 hours before. Camera on required."},
+
+  {id:27, title:"Training: Location Financial Planning – NA Cohort 1",
+   date:d(58), startTime:"09:00", endTime:"16:00",
+   owner:"Anita Solis", region:"NA", capability:"Location Financial Planning",
+   type:"Training", status:"Planned",
+   location:"New York – Training Suite, Floor 4",
+   audience:"NA Store Planners – Cohort 1 (30 participants)",
+   notes:"Role-based training covering store-level budgeting, regional roll-ups, and how to read location performance dashboards.",
+   prep:"Complete the pre-work e-learning module (25 min). Laptop and charger required."},
+
+  {id:28, title:"Go-Live Support Bootcamp – NA",
+   date:d(59), startTime:"08:30", endTime:"17:30",
+   owner:"Anita Solis", region:"NA", capability:"Evergreen Demand Planning",
+   type:"Go-Live Support", status:"Planned",
+   location:"New York – 7th Avenue Office",
+   audience:"Super Users, IT Help Desk, Regional Champions",
+   notes:"Intensive preparation day for go-live support volunteers. Covers how to help colleagues on day one, common questions, and escalation paths.",
+   prep:"You must have completed your role-based training first. Badge access to Floor 12 confirmed."},
+
+  {id:29, title:"Training: Space Planning – EMEA Cohort 1",
+   date:d(63), startTime:"09:00", endTime:"16:00",
+   owner:"Marc Lefebvre", region:"EMEA", capability:"Space Planning",
+   type:"Training", status:"Planned",
+   location:"London – Regent Street Office, Conference Floor",
+   audience:"EMEA Visual Merchandising – Cohort 1 (28 participants)",
+   notes:"Role-based Space Planning training including planogram building, store cluster configuration, and the new approval flow.",
+   prep:"Complete the pre-work module. Bring your store planogram reference files for a hands-on exercise."},
+
+  {id:30, title:"IBP Newsletter – Next Month's Edition",
+   date:d(60), startTime:"07:00", endTime:"07:00",
+   owner:"Lena Becker", region:"Global", capability:"Evergreen Demand Planning",
+   type:"Newsletter", status:"Planned",
+   location:"Email Distribution",
+   audience:"All program participants",
+   notes:"Monthly newsletter covering roadshow highlights, the upcoming training schedule, and an IBP glossary guide.",
+   prep:"No action required. Watch for it in your inbox."},
+];
+
+/* ============================================================
+   STATE
+============================================================ */
+let currentYear, currentMonth;
+let filteredEvents = [];
+
+/* ============================================================
+   INIT
+============================================================ */
+function init() {
+  const now = new Date();
+  currentYear  = now.getFullYear();
+  currentMonth = now.getMonth();
+
+  document.getElementById('lastUpdated').textContent = fmtFull(now);
+
+  applyFilters();
+  buildCapabilityGrid();
+}
+
+/* ============================================================
+   APPLY FILTERS
+============================================================ */
+function applyFilters() {
+  const region = document.getElementById('filterRegion').value;
+  const cap    = document.getElementById('filterCap').value;
+  const type   = document.getElementById('filterType').value;
+  const status = document.getElementById('filterStatus').value;
+
+  filteredEvents = EVENTS.filter(e => {
+    if (region && e.region     !== region) return false;
+    if (cap    && e.capability !== cap)    return false;
+    if (type   && e.type       !== type)   return false;
+    if (status && e.status     !== status) return false;
+    return true;
+  });
+
+  const parts = [region, cap].filter(Boolean);
+  document.getElementById('activeFilterLabel').textContent =
+    parts.length ? parts.join(' · ') : 'All Regions';
+
+  renderCalendar();
+  renderUpcoming();
+}
+
+function resetFilters() {
+  ['filterRegion','filterCap','filterType','filterStatus'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  applyFilters();
+}
+
+
+
+/* ============================================================
+   CALENDAR
+============================================================ */
+function renderCalendar() {
+  const grid  = document.getElementById('calGrid');
+  const label = document.getElementById('calMonthLabel');
+  const MONTHS = ["January","February","March","April","May","June",
+                  "July","August","September","October","November","December"];
+  label.textContent = `${MONTHS[currentMonth]} ${currentYear}`;
+
+  const firstDay    = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+  const prevDays    = new Date(currentYear, currentMonth, 0).getDate();
+  const today       = new Date();
+
+  const byDate = {};
+  filteredEvents.forEach(e => {
+    if (!byDate[e.date]) byDate[e.date] = [];
+    byDate[e.date].push(e);
+  });
+
+  grid.innerHTML = '';
+  const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+
+  for (let i = 0; i < totalCells; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell';
+    let dayNum, dateStr, isOther = false;
+
+    if (i < firstDay) {
+      dayNum  = prevDays - firstDay + i + 1;
+      dateStr = fmtDate(new Date(currentYear, currentMonth-1, dayNum));
+      isOther = true;
+    } else if (i >= firstDay + daysInMonth) {
+      dayNum  = i - firstDay - daysInMonth + 1;
+      dateStr = fmtDate(new Date(currentYear, currentMonth+1, dayNum));
+      isOther = true;
+    } else {
+      dayNum  = i - firstDay + 1;
+      dateStr = fmtDate(new Date(currentYear, currentMonth, dayNum));
+    }
+
+    if (isOther) cell.classList.add('other-month');
+    const isToday = !isOther && dayNum === today.getDate() &&
+      currentMonth === today.getMonth() && currentYear === today.getFullYear();
+    if (isToday) cell.classList.add('today');
+
+    const numEl = document.createElement('div');
+    numEl.className   = 'cal-date-num';
+    numEl.textContent = dayNum;
+    cell.appendChild(numEl);
+
+    const dayEvts = byDate[dateStr] || [];
+    dayEvts.slice(0,2).forEach(ev => {
+      const pill = document.createElement('span');
+      pill.className        = 'cal-event-pill';
+      pill.style.background = REGION_COLOR[ev.region] || '#6B7280';
+      pill.textContent      = ev.title;
+      pill.onclick          = e => { e.stopPropagation(); openModal(ev); };
+      cell.appendChild(pill);
+    });
+    if (dayEvts.length > 2) {
+      const more = document.createElement('div');
+      more.className   = 'cal-more-badge';
+      more.textContent = `+${dayEvts.length-2} more`;
+      more.onclick     = e => { e.stopPropagation(); openModal(dayEvts[2]); };
+      cell.appendChild(more);
+    }
+    grid.appendChild(cell);
+  }
+}
+
+function prevMonth() {
+  if (--currentMonth < 0) { currentMonth = 11; currentYear--; }
+  renderCalendar();
+}
+function nextMonth() {
+  if (++currentMonth > 11) { currentMonth = 0; currentYear++; }
+  renderCalendar();
+}
+function goToToday() {
+  const now = new Date();
+  currentYear = now.getFullYear(); currentMonth = now.getMonth();
+  renderCalendar();
+}
+
+/* ============================================================
+   UPCOMING EVENTS
+============================================================ */
+function renderUpcoming() {
+  const list    = document.getElementById('upcomingList');
+  const countEl = document.getElementById('upcomingCount');
+  const now = new Date(); now.setHours(0,0,0,0);
+
+  const upcoming = filteredEvents
+    .filter(e => new Date(e.date) >= now)
+    .sort((a,b) => new Date(a.date)-new Date(b.date))
+    .slice(0,10);
+
+  countEl.textContent = upcoming.length;
+  list.innerHTML = '';
+
+  if (!upcoming.length) {
+    list.innerHTML = `<div style="padding:28px;text-align:center;color:var(--slate-mid);font-size:13px;">No upcoming events match the current filters.</div>`;
+    return;
+  }
+
+  upcoming.forEach(ev => {
+    const d     = new Date(ev.date);
+    const color = REGION_COLOR[ev.region] || '#6B7280';
+    const sc    = statusCls(ev.status);
+    const rc    = REGION_TAG[ev.region] || '';
+
+    const item = document.createElement('div');
+    item.className = 'event-list-item';
+    item.onclick   = () => openModal(ev);
+    item.innerHTML = `
+      <div class="event-date-badge" style="background:${color}">
+        <div class="event-date-day">${d.getDate()}</div>
+        <div class="event-date-mon">${d.toLocaleString('en',{month:'short'}).toUpperCase()}</div>
+      </div>
+      <div>
+        <div class="event-info-title">${ev.title}</div>
+        <div class="event-info-cap">${ev.capability}</div>
+        <div class="event-info-meta">
+          <span class="tag ${rc}">${ev.region}</span>
+          <span class="tag ${sc}">${ev.status}</span>
+          <span class="tag tag-type">${ev.type}</span>
+        </div>
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+/* ============================================================
+   CAPABILITY GRID
+============================================================ */
+function buildCapabilityGrid() {
+  const grid = document.getElementById('capGrid');
+  grid.innerHTML = '';
+
+  CAPABILITIES.forEach(cap => {
+    const capEvts  = EVENTS.filter(e => e.capability === cap);
+    const upcoming = capEvts
+      .filter(e => new Date(e.date) >= new Date())
+      .sort((a,b) => new Date(a.date)-new Date(b.date));
+    const trainings = capEvts.filter(e => e.type==='Training').length;
+    const nextDate  = upcoming.length ? fmtShort(new Date(upcoming[0].date)) : 'None scheduled';
+    const nextTitle = upcoming.length ? upcoming[0].title : '—';
+    const nextReg   = upcoming.length ? upcoming[0].region : '';
+
+    const card = document.createElement('div');
+    card.className = 'cap-card';
+    card.innerHTML = `
+      <div class="cap-header"><div class="cap-name">${cap}</div></div>
+      <div class="cap-body">
+        <div class="cap-stat-row">
+          <div class="cap-stat">
+            <div class="cap-stat-num">${capEvts.length}</div>
+            <div class="cap-stat-lbl">Events</div>
+          </div>
+          <div class="cap-stat">
+            <div class="cap-stat-num">${trainings}</div>
+            <div class="cap-stat-lbl">Training</div>
+          </div>
+          <div class="cap-stat">
+            <div class="cap-stat-num">${upcoming.length}</div>
+            <div class="cap-stat-lbl">Upcoming</div>
+          </div>
+        </div>
+        <div class="cap-next">
+          <strong>Next:</strong> ${nextDate}
+          ${nextReg ? `<span class="tag ${REGION_TAG[nextReg]||''}" style="font-size:8px;margin-left:4px">${nextReg}</span>` : ''}
+          <br>${nextTitle.length>42?nextTitle.slice(0,40)+'…':nextTitle}
+        </div>
+      </div>
+    `;
+    card.onclick = () => {
+      document.getElementById('filterCap').value = cap;
+      applyFilters();
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    grid.appendChild(card);
+  });
+}
+
+/* ============================================================
+   MODAL
+============================================================ */
+function openModal(ev) {
+  const color = REGION_COLOR[ev.region] || '#6B7280';
+  const badge = document.getElementById('mRegionBadge');
+  badge.textContent      = ev.region;
+  badge.style.background = color;
+  badge.style.color      = '#fff';
+
+  document.getElementById('mTitle').textContent    = ev.title;
+  document.getElementById('mDateLine').textContent = `${fmtFull(new Date(ev.date))}  ·  ${ev.startTime} – ${ev.endTime}`;
+  document.getElementById('mCap').textContent      = ev.capability;
+  document.getElementById('mType').textContent     = ev.type;
+  document.getElementById('mRegion').textContent   = ev.region;
+  document.getElementById('mLocation').textContent = ev.location;
+  document.getElementById('mOwner').textContent    = ev.owner;
+  document.getElementById('mStatus').innerHTML     = `<span class="tag ${statusCls(ev.status)}">${ev.status}</span>`;
+  document.getElementById('mAudience').textContent = ev.audience || '—';
+  document.getElementById('mDesc').textContent     = ev.notes || 'No description provided.';
+  document.getElementById('mPrep').textContent     = ev.prep  || 'No preparation notes.';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(e) { if (e.target===document.getElementById('modalOverlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+/* ============================================================
+   KEYBOARD
+============================================================ */
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape')     closeModalDirect();
+  if (e.key==='ArrowLeft')  prevMonth();
+  if (e.key==='ArrowRight') nextMonth();
+});
+
+/* ============================================================
+   HELPERS
+============================================================ */
+function fmtDate(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmtShort(d) { return d.toLocaleString('en',{month:'short',day:'numeric'}); }
+function fmtFull(d)  { return d.toLocaleString('en',{weekday:'short',month:'long',day:'numeric',year:'numeric'}); }
+function getWeekStart(d) {
+  const ws = new Date(d);
+  ws.setDate(d.getDate()-d.getDay());
+  ws.setHours(0,0,0,0);
+  return ws;
+}
+function statusCls(s) {
+  return ({Planned:'tag-status-planned',Confirmed:'tag-status-confirmed',
+    'In Progress':'tag-status-inprogress','At Risk':'tag-status-atrisk',
+    Complete:'tag-status-complete'})[s] || 'tag-status-planned';
+}
+
+// Fire init as soon as possible, with multiple fallbacks
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+window.onload = function() { if (!document.getElementById('calMonthLabel').textContent || document.getElementById('calMonthLabel').textContent === '—') { init(); } };
+</script>
+</body>
+</html>
